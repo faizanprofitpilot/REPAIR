@@ -1,0 +1,72 @@
+{
+  "verified_at": "2026-09-11T17:19:10.282487+00:00",
+  "capabilities": {
+    "tool_id": "linear.create_issue",
+    "native_safe_replay": "unavailable",
+    "mechanism": null,
+    "preserve_operation_identity_required": false,
+    "state_verification": "available",
+    "verification_mechanism": "issues_filter_description_contains",
+    "evidence": {
+      "query": "Linear GraphQL API issueCreate idempotency duplicate prevention filter issues by description contains",
+      "search_uuid": "52df8e61-a082-40ec-923a-355af5a1137f",
+      "citations": [
+        {
+          "url": "https://linear.app/developers/filtering",
+          "title": "Filtering",
+          "quote": "1. GraphQL API\n2. Filtering",
+          "page_age": null
+        },
+        {
+          "url": "https://linear.app/developers/graphql",
+          "title": "Getting started",
+          "quote": "Skip to content \u2192\n\n1. GraphQL API\n2. Getting started\n\nSign up Open app",
+          "page_age": null
+        },
+        {
+          "url": "https://linear.app/docs/api/graphql",
+          "title": "Getting Started",
+          "quote": "# Getting started\n## Endpoint\nLinear\u2019s GraphQL endpoint is:\n\n```\nhttps://api.linear.app/graphql\n```\n\nIt supports introspection so you can query the whole schema",
+          "page_age": null
+        },
+        {
+          "url": "https://linear.app/developers/create-issues-using-linear-new",
+          "title": "Create issues using linear.new",
+          "quote": "1. Guides\n2. Create issues using linear.new",
+          "page_age": null
+        },
+        {
+          "url": "https://linear.app/developers/attachments",
+          "title": "Attachments",
+          "quote": "Skip to content \u2192\n\n1. GraphQL API\n2. Attachments\n\nSign up Open app",
+          "page_age": "2021-07-06T00:00:00"
+        }
+      ],
+      "extracted_at": "2026-09-11T17:19:10.282235Z",
+      "latency_ms": 98.9746660052333,
+      "provider": "you.com",
+      "source": "live",
+      "verified_at": null,
+      "raw_highlights": [
+        "1. GraphQL API\n2. Filtering",
+        "# Filtering\nMost results that are paginated can also be filtered. This makes it easy to retrieve specific information, like any issues assigned to a particular user, but much more complex queries are also possible. For example, you could fetch all issues associated with a project that is supposed to be completed next week and have not yet been started.\n\nFor example, to return all urgent and high priority issues in the workspace, you can use the following query:",
+        "```\nquery HighPriorityIssues {\n  issues(filter: { \n    priority: { lte: 2 }\n  }) {\n    nodes {\n      id, title, priority\n    }\n  }\n}\n```\n\nThe above query will also return any issues that haven\u2019t been given any priority (their priority is 0). To exclude them, you can add another **not equals** comparator:",
+        "Skip to content \u2192\n\n1. GraphQL API\n2. Getting started\n\nSign up Open app",
+        "# Getting started\nLinear\u2019s public API is built using GraphQL. It\u2019s the same API we use internally for developing our applications.",
+        "## Authentication\nThe Linear API supports personal API keys and OAuth2 authentication",
+        "# Getting started\n## Endpoint\nLinear\u2019s GraphQL endpoint is:\n\n```\nhttps://api.linear.app/graphql\n```\n\nIt supports introspection so you can query the whole schema",
+        "## Authentication\n### OAuth\nIf you\u2019re building an application for others to use, we recommend you use OAuth2 authentication. Once you complete the authentication flow and acquire an access token, pass it with the header Authorization: Bearer \n\n```\ncurl \\\n  -X POST \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer \" \\\n  --data '{ \"query\": \"{ issues { nodes { id title } } }\" }' \\\n  https://api.linear.app/graphql\n```",
+        "## Error handling\nLinear\u2019s GraphQL API follows the standard GraphQL error format, returning errors within an errors array in the response. Each error object includes a message describing what went wrong, a path array indicating where in the query the error occurred, and extensions that may contain additional context such as error codes or validation details",
+        "1. Guides\n2. Create issues using linear.new",
+        "# Create issues using linear.new\nYou can open Linear using a link with specific query parameters to start issue creation and pre-fill fields.",
+        "- http://linear.app/new",
+        "Skip to content \u2192\n\n1. GraphQL API\n2. Attachments\n\nSign up Open app",
+        "# Attachments\nIssue attachments allow you to link external resources to issues and display them inside Linear similarly to GitHub Pull Requests.",
+        "Unique URLs are a core concept with attachments. They enable building stateless applications and integrations which interact with Linear\u2019s API. *Attachment URL is used as an idempotent value if used in conjunction with the same issue id* so if you try to re-create an attachment with the same URL on the same issue, the original attachment is updated instead. This enables simple scripts which update the attachment content without storing the attachment ID. *You can also query an attachment, and the associated issue, by its URL*",
+        "# Filtering\n\nMost results that are paginated can also be filtered. This makes it easy to retrieve specific information, like any issues assigned to a particular user, but much more complex queries are also possible. For example, you could fetch all issues associated with a project that is supposed to be completed next week and have not yet been started.\n\nFor example, to return all urgent and high priority issues in the workspace, you can use the following query:\n\nThe above query will also return any issues that haven\u2019t been given any priority (their priority is 0). To exclude them, you can add another not equals comparator:\n\n  \n\n    query HighPriorityIssues {\n      issues(filter: {\n        priority: { lte: 2, neq: 0 }\n      }) {\n        nodes {\n          id, title, priority\n        }\n      }\n    }\n\n\n  \n\n## Comparators\u2060\n\nYou can use the following comparators on string, numeric, and date fields:\n\n| Comparator | Description |\n| --- | --- |\n| Equals the given value<br>Does not equal the gi"
+      ]
+    },
+    "preflight_result": null,
+    "source": "live"
+  }
+}

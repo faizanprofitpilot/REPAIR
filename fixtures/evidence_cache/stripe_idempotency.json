@@ -1,0 +1,72 @@
+{
+  "verified_at": "2026-09-11T17:18:54.780122+00:00",
+  "capabilities": {
+    "tool_id": "stripe.create_refund",
+    "native_safe_replay": "available",
+    "mechanism": "idempotency_key",
+    "preserve_operation_identity_required": true,
+    "state_verification": "available",
+    "verification_mechanism": "list_refunds",
+    "evidence": {
+      "query": "Stripe API idempotent requests Idempotency-Key retry POST after connection failure same parameters ambiguous network error",
+      "search_uuid": "f71c1643-dab6-4c2d-b988-6c85b1a911ff",
+      "citations": [
+        {
+          "url": "https://docs.stripe.com/plan-integration/get-started/server-side-integration",
+          "title": "Server-side integration",
+          "quote": "Guide to setting up server-side Stripe integration including authentication, API best practices, and webhooks.\nSearch\n/",
+          "page_age": null
+        },
+        {
+          "url": "https://docs.stripe.com/error-low-level?locale=en-GB",
+          "title": "Advanced error handling",
+          "quote": "Advanced guide for handling HTTP-level errors, idempotency and retry logic in Stripe API integrations.\nSearch\n/\nAPI",
+          "page_age": null
+        },
+        {
+          "url": "https://docs.stripe.com/error-handling",
+          "title": "Error handling",
+          "quote": "A guide for handling Stripe API errors including declines, validation errors, and network issues.\nSearch\n/\nAPI",
+          "page_age": "2022-04-28T00:00:00"
+        },
+        {
+          "url": "https://docs.stripe.com/api/connected-accounts?api-version=2025-11-17.preview&rds=1",
+          "title": "Connected Accounts",
+          "quote": "# Errors\nStripe uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the 5xx range indicate an error with Stripe\u2019s servers (these are rare).\n\nSome 4xx errors that could be handled programmatically (e.g., a card is declined) include an error code that",
+          "page_age": null
+        },
+        {
+          "url": "https://docs.stripe.com/api/expanding_objects?lang=php",
+          "title": "Expanding Responses",
+          "quote": "Introduction Authentication Connected Accounts Errors Expanding Responses Idempotent requests Include-dependent response values (API v2) Metadata Pagination Request IDs Versioning",
+          "page_age": null
+        }
+      ],
+      "extracted_at": "2026-09-11T17:18:54.779868Z",
+      "latency_ms": 142.875624995213,
+      "provider": "you.com",
+      "source": "live",
+      "verified_at": null,
+      "raw_highlights": [
+        "Guide to setting up server-side Stripe integration including authentication, API best practices, and webhooks.\nSearch\n/",
+        "# Server-side integration\n## Set up your Stripe back-end integration.\nTo set up an optimal backend integration, you must authenticate to Stripe, learn API request best practices, and appropriately configure your webhooks",
+        "## API request best practices\nStripe recommends adding an idempotency key to all POST requests. Make sure that the key is unique, such as a universally unique identifier (UUID) or a combination of customer ID and order ID. These keys allow you to safely retry requests if you encounter a network error",
+        "Advanced guide for handling HTTP-level errors, idempotency and retry logic in Stripe API integrations.\nSearch\n/\nAPI",
+        "# Advanced error handling\n## Learn how to understand errors at the HTTP level.\nThis page covers two advanced error handling topics:\n\n- HTTP responses that represent errors\n- Idempotency and retries",
+        "## Errors in HTTP\nEven when an API call fails, our client libraries make error information available by raising an exception or returning an error value. But if you don\u2019t use a client library, or if an unusual situation arises, you might need low-level details about HTTP responses and when we emit them.\n\nFrom an HTTP point of view, errors fall into three major categories:",
+        "A guide for handling Stripe API errors including declines, validation errors, and network issues.\nSearch\n/\nAPI",
+        "# Error handling\n## Catch and respond to declines, invalid data, network problems, and more.\nPython\nPHP\nJava\nGo\nStripe offers many kinds of errors. They can reflect external events, like declined payments and network interruptions, or code problems, like invalid API calls",
+        "## Parse error data\nWhen Stripe returns an error to your API request, you receive details about the error that help you understand how to apply the handling suggestions in this guide. These details also help you provide important information to Stripe support, if needed",
+        "# Errors\nStripe uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the 5xx range indicate an error with Stripe\u2019s servers (these are rare).\n\nSome 4xx errors that could be handled programmatically (e.g., a card is declined) include an error code that briefly explains the error reported",
+        "### Attributes\n- code nullable string For some errors that could be handled programmatically, a short string indicating the error code reported.\n- decline\\_code nullable string For card errors resulting from a card issuer decline, a short string indicating the card issuer\u2019s reason for the decline if they provide one.",
+        "- payment\\_intent nullable object The PaymentIntent object for errors returned on a request involving a PaymentIntent.\n- type enum The type of error returned. One of api\\_error, card\\_error, idempotency\\_error, or invalid\\_request\\_error Possible enum values api\\_error card\\_error idempotency\\_error invalid\\_request\\_error",
+        "Introduction Authentication Connected Accounts Errors Expanding Responses Idempotent requests Include-dependent response values (API v2) Metadata Pagination Request IDs Versioning",
+        "# Idempotent requests\nA client generates an idempotency key, which is a unique key that the server uses to recognize subsequent retries of the same request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions. Idempotency keys are up to 255 characters long",
+        "All POST requests accept idempotency keys. Don\u2019t send idempotency keys in GET and DELETE requests because it has no effect. These requests are idempotent by definition.",
+        "# Server-side integration\n\n## Set up your Stripe back-end integration.\n\nTo set up an optimal backend integration, you must authenticate to Stripe, learn API request best practices, and appropriately configure your webhooks.\n\n## Authenticate to Stripe\n\nStripe provides authentication through an API key. You can also create restricted access keys to further control access to specific resources. You can use the secret and publishable API keys to create tokens, but need secret keys for any server-side authentication.\n\nHere\u2019s an example API call:\n\n## API request best practices\n\nStripe recommends adding an idempotency key to all POST requests. Make sure that the key is unique, such as a universally unique identifier (UUID) or a combination of customer ID and order ID. These keys allow you to safely retry requests if you encounter a network error.\n\n### Customer objects: storing payment details\n\nTo store and reuse PaymentMethods, you must attach them to Customer objects.\n\nAfter attaching the Pa"
+      ]
+    },
+    "preflight_result": null,
+    "source": "live"
+  }
+}

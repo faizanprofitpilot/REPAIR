@@ -1,0 +1,15 @@
+[project]
+name = "repair-daytona"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "daytona>=0.211.2",
+  "httpx>=0.28.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/repair_daytona"]

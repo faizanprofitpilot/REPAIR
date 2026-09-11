@@ -1,0 +1,37 @@
+# Secrets & local state
+.env
+.env.local
+.onerc
+**/.onerc
+*.pem
+*.key
+
+# Python
+apps/engine/.venv/
+apps/engine/daytona_runner_env/.venv/
+apps/engine/**/__pycache__/
+apps/engine/**/*.py[cod]
+apps/engine/.pytest_cache/
+apps/engine/*.egg-info/
+apps/engine/dist/
+apps/engine/build/
+**/__pycache__/
+
+# Node
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/.turbo/
+
+# Runtime artifacts
+runs/
+!runs/.gitkeep
+!runs/golden/
+!runs/golden/**
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.log
+*.swp

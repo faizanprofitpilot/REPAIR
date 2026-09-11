@@ -1,0 +1,8 @@
+{
+  "payment_intent": "pi_3UEXbfChwewYxXGK1asAKE73",
+  "refund_id": "re_3UEXbfChwewYxXGK1X2zKMII",
+  "amount": 1290,
+  "livemode": null,
+  "status": "succeeded",
+  "test_mode_gate": "STRIPE_TEST_MODE_VERIFIED"
+}

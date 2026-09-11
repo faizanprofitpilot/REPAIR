@@ -1,0 +1,37 @@
+{
+  "id": "ambiguous_side_effect_recovery",
+  "version": 2,
+  "rationale": "To prevent financial inconsistencies caused by ambiguous transaction states and uncorrelated replay of persistent mutations, enforce strict verification and correlation for all persistent side effects.",
+  "match": {
+    "effect_type": "mutation",
+    "persistent_side_effect": true,
+    "outcome_state": null,
+    "consequence_level": null,
+    "replay_type": null
+  },
+  "require": [
+    "verify_authoritative_state"
+  ],
+  "prohibit": [
+    "uncorrelated_replay"
+  ],
+  "recovery": {
+    "if_native_safe_replay_available": [
+      "preserve_operation_identity"
+    ],
+    "otherwise": [
+      "verify_authoritative_state"
+    ]
+  },
+  "allow": [
+    "correlated_replay",
+    "retry",
+    "continue"
+  ],
+  "bypass_when": [
+    "read_only_action",
+    "definitive_precommit_failure",
+    "confirmed_failed_mutation",
+    "no_prior_operation"
+  ]
+}

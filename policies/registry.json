@@ -1,0 +1,190 @@
+{
+  "active": [
+    {
+      "id": "ambiguous_side_effect_recovery",
+      "version": 3,
+      "rationale": "Restricts policy to ambiguous persistent mutations with uncorrelated replay risk, requiring safe replay establishment to prevent over-application of side effects.",
+      "match": {
+        "effect_type": "mutation",
+        "persistent_side_effect": true,
+        "outcome_state": "ambiguous",
+        "consequence_level": null,
+        "replay_type": null
+      },
+      "require": [
+        "establish_safe_replay"
+      ],
+      "prohibit": [
+        "uncorrelated_replay"
+      ],
+      "recovery": {
+        "if_native_safe_replay_available": [
+          "preserve_operation_identity"
+        ],
+        "otherwise": [
+          "verify_authoritative_state"
+        ]
+      },
+      "allow": [
+        "correlated_replay",
+        "retry",
+        "continue"
+      ],
+      "bypass_when": [
+        "read_only_action",
+        "definitive_precommit_failure",
+        "confirmed_failed_mutation",
+        "no_prior_operation"
+      ]
+    }
+  ],
+  "capabilities": {
+    "stripe.create_refund": {
+      "tool_id": "stripe.create_refund",
+      "native_safe_replay": "available",
+      "mechanism": "idempotency_key",
+      "preserve_operation_identity_required": true,
+      "state_verification": "available",
+      "verification_mechanism": "list_refunds",
+      "evidence": {
+        "query": "Stripe API idempotent requests Idempotency-Key retry POST after connection failure same parameters ambiguous network error",
+        "search_uuid": "f71c1643-dab6-4c2d-b988-6c85b1a911ff",
+        "citations": [
+          {
+            "url": "https://docs.stripe.com/plan-integration/get-started/server-side-integration",
+            "title": "Server-side integration",
+            "quote": "Guide to setting up server-side Stripe integration including authentication, API best practices, and webhooks.\nSearch\n/",
+            "page_age": null
+          },
+          {
+            "url": "https://docs.stripe.com/error-low-level?locale=en-GB",
+            "title": "Advanced error handling",
+            "quote": "Advanced guide for handling HTTP-level errors, idempotency and retry logic in Stripe API integrations.\nSearch\n/\nAPI",
+            "page_age": null
+          },
+          {
+            "url": "https://docs.stripe.com/error-handling",
+            "title": "Error handling",
+            "quote": "A guide for handling Stripe API errors including declines, validation errors, and network issues.\nSearch\n/\nAPI",
+            "page_age": "2022-04-28T00:00:00"
+          },
+          {
+            "url": "https://docs.stripe.com/api/connected-accounts?api-version=2025-11-17.preview&rds=1",
+            "title": "Connected Accounts",
+            "quote": "# Errors\nStripe uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the 5xx range indicate an error with Stripe\u2019s servers (these are rare).\n\nSome 4xx errors that could be handled programmatically (e.g., a card is declined) include an error code that",
+            "page_age": null
+          },
+          {
+            "url": "https://docs.stripe.com/api/expanding_objects?lang=php",
+            "title": "Expanding Responses",
+            "quote": "Introduction Authentication Connected Accounts Errors Expanding Responses Idempotent requests Include-dependent response values (API v2) Metadata Pagination Request IDs Versioning",
+            "page_age": null
+          }
+        ],
+        "extracted_at": "2026-09-11T17:18:54.779868Z",
+        "latency_ms": 142.875624995213,
+        "provider": "you.com",
+        "source": "live",
+        "verified_at": null,
+        "raw_highlights": [
+          "Guide to setting up server-side Stripe integration including authentication, API best practices, and webhooks.\nSearch\n/",
+          "# Server-side integration\n## Set up your Stripe back-end integration.\nTo set up an optimal backend integration, you must authenticate to Stripe, learn API request best practices, and appropriately configure your webhooks",
+          "## API request best practices\nStripe recommends adding an idempotency key to all POST requests. Make sure that the key is unique, such as a universally unique identifier (UUID) or a combination of customer ID and order ID. These keys allow you to safely retry requests if you encounter a network error",
+          "Advanced guide for handling HTTP-level errors, idempotency and retry logic in Stripe API integrations.\nSearch\n/\nAPI",
+          "# Advanced error handling\n## Learn how to understand errors at the HTTP level.\nThis page covers two advanced error handling topics:\n\n- HTTP responses that represent errors\n- Idempotency and retries",
+          "## Errors in HTTP\nEven when an API call fails, our client libraries make error information available by raising an exception or returning an error value. But if you don\u2019t use a client library, or if an unusual situation arises, you might need low-level details about HTTP responses and when we emit them.\n\nFrom an HTTP point of view, errors fall into three major categories:",
+          "A guide for handling Stripe API errors including declines, validation errors, and network issues.\nSearch\n/\nAPI",
+          "# Error handling\n## Catch and respond to declines, invalid data, network problems, and more.\nPython\nPHP\nJava\nGo\nStripe offers many kinds of errors. They can reflect external events, like declined payments and network interruptions, or code problems, like invalid API calls",
+          "## Parse error data\nWhen Stripe returns an error to your API request, you receive details about the error that help you understand how to apply the handling suggestions in this guide. These details also help you provide important information to Stripe support, if needed",
+          "# Errors\nStripe uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the 5xx range indicate an error with Stripe\u2019s servers (these are rare).\n\nSome 4xx errors that could be handled programmatically (e.g., a card is declined) include an error code that briefly explains the error reported",
+          "### Attributes\n- code nullable string For some errors that could be handled programmatically, a short string indicating the error code reported.\n- decline\\_code nullable string For card errors resulting from a card issuer decline, a short string indicating the card issuer\u2019s reason for the decline if they provide one.",
+          "- payment\\_intent nullable object The PaymentIntent object for errors returned on a request involving a PaymentIntent.\n- type enum The type of error returned. One of api\\_error, card\\_error, idempotency\\_error, or invalid\\_request\\_error Possible enum values api\\_error card\\_error idempotency\\_error invalid\\_request\\_error",
+          "Introduction Authentication Connected Accounts Errors Expanding Responses Idempotent requests Include-dependent response values (API v2) Metadata Pagination Request IDs Versioning",
+          "# Idempotent requests\nA client generates an idempotency key, which is a unique key that the server uses to recognize subsequent retries of the same request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions. Idempotency keys are up to 255 characters long",
+          "All POST requests accept idempotency keys. Don\u2019t send idempotency keys in GET and DELETE requests because it has no effect. These requests are idempotent by definition.",
+          "# Server-side integration\n\n## Set up your Stripe back-end integration.\n\nTo set up an optimal backend integration, you must authenticate to Stripe, learn API request best practices, and appropriately configure your webhooks.\n\n## Authenticate to Stripe\n\nStripe provides authentication through an API key. You can also create restricted access keys to further control access to specific resources. You can use the secret and publishable API keys to create tokens, but need secret keys for any server-side authentication.\n\nHere\u2019s an example API call:\n\n## API request best practices\n\nStripe recommends adding an idempotency key to all POST requests. Make sure that the key is unique, such as a universally unique identifier (UUID) or a combination of customer ID and order ID. These keys allow you to safely retry requests if you encounter a network error.\n\n### Customer objects: storing payment details\n\nTo store and reuse PaymentMethods, you must attach them to Customer objects.\n\nAfter attaching the Pa"
+        ]
+      },
+      "preflight_result": {
+        "payment_intent": "pi_3UEXbjChwewYxXGK0v6WGtRx",
+        "idempotency_key": "repair-preflight-5500447faa88",
+        "refund_1": "re_3UEXbjChwewYxXGK0ZuwSMda",
+        "refund_2": "re_3UEXbjChwewYxXGK0ZuwSMda",
+        "refund_count": 1,
+        "same_id": true,
+        "header_passthrough_ok": true,
+        "native_safe_replay": "available"
+      },
+      "source": "live"
+    },
+    "linear.create_issue": {
+      "tool_id": "linear.create_issue",
+      "native_safe_replay": "unavailable",
+      "mechanism": null,
+      "preserve_operation_identity_required": false,
+      "state_verification": "available",
+      "verification_mechanism": "issues_filter_description_contains",
+      "evidence": {
+        "query": "Linear GraphQL API issueCreate idempotency duplicate prevention filter issues by description contains",
+        "search_uuid": "52df8e61-a082-40ec-923a-355af5a1137f",
+        "citations": [
+          {
+            "url": "https://linear.app/developers/filtering",
+            "title": "Filtering",
+            "quote": "1. GraphQL API\n2. Filtering",
+            "page_age": null
+          },
+          {
+            "url": "https://linear.app/developers/graphql",
+            "title": "Getting started",
+            "quote": "Skip to content \u2192\n\n1. GraphQL API\n2. Getting started\n\nSign up Open app",
+            "page_age": null
+          },
+          {
+            "url": "https://linear.app/docs/api/graphql",
+            "title": "Getting Started",
+            "quote": "# Getting started\n## Endpoint\nLinear\u2019s GraphQL endpoint is:\n\n```\nhttps://api.linear.app/graphql\n```\n\nIt supports introspection so you can query the whole schema",
+            "page_age": null
+          },
+          {
+            "url": "https://linear.app/developers/create-issues-using-linear-new",
+            "title": "Create issues using linear.new",
+            "quote": "1. Guides\n2. Create issues using linear.new",
+            "page_age": null
+          },
+          {
+            "url": "https://linear.app/developers/attachments",
+            "title": "Attachments",
+            "quote": "Skip to content \u2192\n\n1. GraphQL API\n2. Attachments\n\nSign up Open app",
+            "page_age": "2021-07-06T00:00:00"
+          }
+        ],
+        "extracted_at": "2026-09-11T17:19:10.282235Z",
+        "latency_ms": 98.9746660052333,
+        "provider": "you.com",
+        "source": "live",
+        "verified_at": null,
+        "raw_highlights": [
+          "1. GraphQL API\n2. Filtering",
+          "# Filtering\nMost results that are paginated can also be filtered. This makes it easy to retrieve specific information, like any issues assigned to a particular user, but much more complex queries are also possible. For example, you could fetch all issues associated with a project that is supposed to be completed next week and have not yet been started.\n\nFor example, to return all urgent and high priority issues in the workspace, you can use the following query:",
+          "```\nquery HighPriorityIssues {\n  issues(filter: { \n    priority: { lte: 2 }\n  }) {\n    nodes {\n      id, title, priority\n    }\n  }\n}\n```\n\nThe above query will also return any issues that haven\u2019t been given any priority (their priority is 0). To exclude them, you can add another **not equals** comparator:",
+          "Skip to content \u2192\n\n1. GraphQL API\n2. Getting started\n\nSign up Open app",
+          "# Getting started\nLinear\u2019s public API is built using GraphQL. It\u2019s the same API we use internally for developing our applications.",
+          "## Authentication\nThe Linear API supports personal API keys and OAuth2 authentication",
+          "# Getting started\n## Endpoint\nLinear\u2019s GraphQL endpoint is:\n\n```\nhttps://api.linear.app/graphql\n```\n\nIt supports introspection so you can query the whole schema",
+          "## Authentication\n### OAuth\nIf you\u2019re building an application for others to use, we recommend you use OAuth2 authentication. Once you complete the authentication flow and acquire an access token, pass it with the header Authorization: Bearer \n\n```\ncurl \\\n  -X POST \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer \" \\\n  --data '{ \"query\": \"{ issues { nodes { id title } } }\" }' \\\n  https://api.linear.app/graphql\n```",
+          "## Error handling\nLinear\u2019s GraphQL API follows the standard GraphQL error format, returning errors within an errors array in the response. Each error object includes a message describing what went wrong, a path array indicating where in the query the error occurred, and extensions that may contain additional context such as error codes or validation details",
+          "1. Guides\n2. Create issues using linear.new",
+          "# Create issues using linear.new\nYou can open Linear using a link with specific query parameters to start issue creation and pre-fill fields.",
+          "- http://linear.app/new",
+          "Skip to content \u2192\n\n1. GraphQL API\n2. Attachments\n\nSign up Open app",
+          "# Attachments\nIssue attachments allow you to link external resources to issues and display them inside Linear similarly to GitHub Pull Requests.",
+          "Unique URLs are a core concept with attachments. They enable building stateless applications and integrations which interact with Linear\u2019s API. *Attachment URL is used as an idempotent value if used in conjunction with the same issue id* so if you try to re-create an attachment with the same URL on the same issue, the original attachment is updated instead. This enables simple scripts which update the attachment content without storing the attachment ID. *You can also query an attachment, and the associated issue, by its URL*",
+          "# Filtering\n\nMost results that are paginated can also be filtered. This makes it easy to retrieve specific information, like any issues assigned to a particular user, but much more complex queries are also possible. For example, you could fetch all issues associated with a project that is supposed to be completed next week and have not yet been started.\n\nFor example, to return all urgent and high priority issues in the workspace, you can use the following query:\n\nThe above query will also return any issues that haven\u2019t been given any priority (their priority is 0). To exclude them, you can add another not equals comparator:\n\n  \n\n    query HighPriorityIssues {\n      issues(filter: {\n        priority: { lte: 2, neq: 0 }\n      }) {\n        nodes {\n          id, title, priority\n        }\n      }\n    }\n\n\n  \n\n## Comparators\u2060\n\nYou can use the following comparators on string, numeric, and date fields:\n\n| Comparator | Description |\n| --- | --- |\n| Equals the given value<br>Does not equal the gi"
+        ]
+      },
+      "preflight_result": null,
+      "source": "live"
+    }
+  }
+}

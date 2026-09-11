@@ -1,0 +1,337 @@
+{
+  "run_id": "demo-afb86f9ca7",
+  "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+  "agent_result": {
+    "mode": "scripted",
+    "prompt_hash": "4e9228ebb3ae584c",
+    "model": "gpt-4.1-mini",
+    "tool_calls": 3,
+    "results": [
+      {
+        "tool": "stripe_get_order",
+        "args": {
+          "order_id": "ord_demo_001"
+        },
+        "result": {
+          "ok": true,
+          "op_id": "op_e5678660",
+          "body": {
+            "order_id": "ord_demo_001",
+            "customer": "Avery Example",
+            "email": "customer@example.com",
+            "total_cents": 3890,
+            "approved_refund_cents": 1290,
+            "already_refunded_cents": 0,
+            "refund_authorized": true,
+            "return_required": false,
+            "note": "Part of order arrived damaged; keep item."
+          },
+          "status_code": 200,
+          "decision": {
+            "verdict": "ALLOW",
+            "matched_policy_id": null,
+            "matched_policy_version": null,
+            "reasons": [
+              "no_active_policies"
+            ],
+            "required_steps": [],
+            "context_snapshot": {
+              "effect_type": "read",
+              "persistent_side_effect": false,
+              "prior_outcome_state": null,
+              "replay_type": "none",
+              "native_safe_replay": "unknown"
+            }
+          }
+        }
+      },
+      {
+        "tool": "stripe_create_refund",
+        "args": {
+          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+          "amount": 1290
+        },
+        "result": {
+          "ok": false,
+          "error": "ToolTransportError",
+          "message": "connection interrupted before a response was received; outcome unknown",
+          "transient": true,
+          "outcome_unknown": true
+        }
+      },
+      {
+        "tool": "stripe_create_refund",
+        "args": {
+          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+          "amount": 1290
+        },
+        "result": {
+          "ok": true,
+          "op_id": "op_dec385bf",
+          "body": {
+            "id": "re_3UEY66ChwewYxXGK0tarpW07",
+            "object": "refund",
+            "amount": 1290,
+            "balance_transaction": "txn_3UEY66ChwewYxXGK0pKlOOhp",
+            "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
+            "created": 1789147130,
+            "currency": "usd",
+            "customer": null,
+            "customer_account": null,
+            "destination_details": {
+              "card": {
+                "reference_status": "pending",
+                "reference_type": "acquirer_reference_number",
+                "type": "refund"
+              },
+              "type": "card"
+            },
+            "metadata": {},
+            "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+            "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+            "reason": null,
+            "receipt_number": null,
+            "source_transfer_reversal": null,
+            "status": "succeeded",
+            "transfer_reversal": null
+          },
+          "status_code": 200,
+          "decision": {
+            "verdict": "ALLOW",
+            "matched_policy_id": null,
+            "matched_policy_version": null,
+            "reasons": [
+              "no_active_policies"
+            ],
+            "required_steps": [],
+            "context_snapshot": {
+              "effect_type": "mutation",
+              "persistent_side_effect": true,
+              "prior_outcome_state": "ambiguous",
+              "replay_type": "uncorrelated",
+              "native_safe_replay": "available"
+            }
+          }
+        },
+        "retry": true
+      }
+    ]
+  },
+  "incident": {
+    "authorized_cents": 1290,
+    "refunded_cents": 2580,
+    "refund_count": 2,
+    "refund_ids": [
+      "re_3UEY66ChwewYxXGK0tarpW07",
+      "re_3UEY66ChwewYxXGK0GanEJ7U"
+    ],
+    "over_refund_cents": 1290,
+    "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov"
+  },
+  "prompt_hash": "4e9228ebb3ae584c",
+  "frozen": true,
+  "ledger": [
+    {
+      "op_id": "op_e5678660",
+      "intent_key": "83ed83201dc5049d",
+      "tool_id": "stripe.get_order",
+      "params": {
+        "order_id": "ord_demo_001"
+      },
+      "outcome_state": "success",
+      "agent_visible_result": {
+        "ok": true,
+        "body": {
+          "order_id": "ord_demo_001",
+          "customer": "Avery Example",
+          "email": "customer@example.com",
+          "total_cents": 3890,
+          "approved_refund_cents": 1290,
+          "already_refunded_cents": 0,
+          "refund_authorized": true,
+          "return_required": false,
+          "note": "Part of order arrived damaged; keep item."
+        }
+      },
+      "true_external_result": {
+        "ok": true,
+        "body": {
+          "order_id": "ord_demo_001",
+          "customer": "Avery Example",
+          "email": "customer@example.com",
+          "total_cents": 3890,
+          "approved_refund_cents": 1290,
+          "already_refunded_cents": 0,
+          "refund_authorized": true,
+          "return_required": false,
+          "note": "Part of order arrived damaged; keep item."
+        }
+      },
+      "identity_material": null,
+      "created_at": "2026-09-11T17:18:47.768021Z",
+      "updated_at": "2026-09-11T17:18:47.768178Z",
+      "error": null
+    },
+    {
+      "op_id": "op_9034859c",
+      "intent_key": "9988ff35383817c9",
+      "tool_id": "stripe.create_refund",
+      "params": {
+        "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+        "amount": 1290
+      },
+      "outcome_state": "ambiguous",
+      "agent_visible_result": null,
+      "true_external_result": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "id": "re_3UEY66ChwewYxXGK0GanEJ7U",
+          "object": "refund",
+          "amount": 1290,
+          "balance_transaction": "txn_3UEY66ChwewYxXGK0idD5HHU",
+          "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
+          "created": 1789147128,
+          "currency": "usd",
+          "customer": null,
+          "customer_account": null,
+          "destination_details": {
+            "card": {
+              "reference_status": "pending",
+              "reference_type": "acquirer_reference_number",
+              "type": "refund"
+            },
+            "type": "card"
+          },
+          "metadata": {},
+          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+          "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+          "reason": null,
+          "receipt_number": null,
+          "source_transfer_reversal": null,
+          "status": "succeeded",
+          "transfer_reversal": null
+        }
+      },
+      "identity_material": "repair-op_9034859c",
+      "created_at": "2026-09-11T17:18:47.768542Z",
+      "updated_at": "2026-09-11T17:18:49.556602Z",
+      "error": "transport interrupted"
+    },
+    {
+      "op_id": "op_dec385bf",
+      "intent_key": "9988ff35383817c9",
+      "tool_id": "stripe.create_refund",
+      "params": {
+        "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+        "amount": 1290
+      },
+      "outcome_state": "success",
+      "agent_visible_result": {
+        "ok": true,
+        "body": {
+          "id": "re_3UEY66ChwewYxXGK0tarpW07",
+          "object": "refund",
+          "amount": 1290,
+          "balance_transaction": "txn_3UEY66ChwewYxXGK0pKlOOhp",
+          "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
+          "created": 1789147130,
+          "currency": "usd",
+          "customer": null,
+          "customer_account": null,
+          "destination_details": {
+            "card": {
+              "reference_status": "pending",
+              "reference_type": "acquirer_reference_number",
+              "type": "refund"
+            },
+            "type": "card"
+          },
+          "metadata": {},
+          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+          "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+          "reason": null,
+          "receipt_number": null,
+          "source_transfer_reversal": null,
+          "status": "succeeded",
+          "transfer_reversal": null
+        }
+      },
+      "true_external_result": {
+        "ok": true,
+        "body": {
+          "id": "re_3UEY66ChwewYxXGK0tarpW07",
+          "object": "refund",
+          "amount": 1290,
+          "balance_transaction": "txn_3UEY66ChwewYxXGK0pKlOOhp",
+          "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
+          "created": 1789147130,
+          "currency": "usd",
+          "customer": null,
+          "customer_account": null,
+          "destination_details": {
+            "card": {
+              "reference_status": "pending",
+              "reference_type": "acquirer_reference_number",
+              "type": "refund"
+            },
+            "type": "card"
+          },
+          "metadata": {},
+          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+          "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+          "reason": null,
+          "receipt_number": null,
+          "source_transfer_reversal": null,
+          "status": "succeeded",
+          "transfer_reversal": null
+        }
+      },
+      "identity_material": "repair-op_dec385bf",
+      "created_at": "2026-09-11T17:18:49.558280Z",
+      "updated_at": "2026-09-11T17:18:51.174244Z",
+      "error": null
+    }
+  ],
+  "starting_state": {
+    "order_total_cents": 3890,
+    "approved_refund_cents": 1290,
+    "already_refunded_cents": 0
+  },
+  "tool_metadata": {
+    "tool_id": "stripe.create_refund",
+    "effect_type": "mutation",
+    "persistent_side_effect": true,
+    "consequence_level": "high",
+    "identity_carrier": "header:Idempotency-Key",
+    "verification_tool_id": "stripe.list_refunds",
+    "platform": "stripe",
+    "description": "Create a Stripe refund"
+  },
+  "capabilities_at_time": {
+    "tool_id": "stripe.create_refund",
+    "native_safe_replay": "available",
+    "mechanism": "idempotency_key",
+    "preserve_operation_identity_required": true,
+    "state_verification": "available",
+    "verification_mechanism": "list_refunds",
+    "evidence": null,
+    "preflight_result": {
+      "payment_intent": "pi_3UEXbjChwewYxXGK0v6WGtRx",
+      "idempotency_key": "repair-preflight-5500447faa88",
+      "refund_1": "re_3UEXbjChwewYxXGK0ZuwSMda",
+      "refund_2": "re_3UEXbjChwewYxXGK0ZuwSMda",
+      "refund_count": 1,
+      "same_id": true,
+      "header_passthrough_ok": true,
+      "native_safe_replay": "available"
+    },
+    "source": "preflight"
+  },
+  "outcome_classification": "ambiguous_then_uncorrelated_replay",
+  "proposed_follow_up": "create_refund_retry",
+  "final_consequence": {
+    "authorized": 1290,
+    "refunded": 2580
+  }
+}

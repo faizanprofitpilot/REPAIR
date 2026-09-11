@@ -1,0 +1,7 @@
+{
+  "verified_at": "2026-09-11T16:45:31.777067+00:00",
+  "livemode": false,
+  "object": "balance",
+  "stripe_connection_suffix": "025c9ca13f66",
+  "result": "STRIPE_TEST_MODE_VERIFIED"
+}

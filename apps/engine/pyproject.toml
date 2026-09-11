@@ -1,0 +1,34 @@
+[project]
+name = "repair"
+version = "0.1.0"
+description = "REPAIR — turns operational failures into machine-enforced runtime policy"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "crewai>=1.15.0,<2",
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "httpx>=0.28.0",
+  "pydantic>=2.11.0,<2.13",
+  "pydantic-settings>=2.6.0",
+  "python-dotenv>=1.0.0",
+  "sse-starlette>=2.1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0", "pytest-asyncio>=0.24.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/repair"]
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]

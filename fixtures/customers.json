@@ -1,0 +1,27 @@
+{
+  "customers": [
+    {
+      "id": "cus_synth_001",
+      "name": "Avery Example",
+      "email": "customer@example.com"
+    },
+    {
+      "id": "cus_synth_002",
+      "name": "Jordan Demo",
+      "email": "jordan.demo@example.com"
+    }
+  ],
+  "orders": {
+    "ord_demo_001": {
+      "order_id": "ord_demo_001",
+      "customer": "Avery Example",
+      "email": "customer@example.com",
+      "total_cents": 3890,
+      "approved_refund_cents": 1290,
+      "already_refunded_cents": 0,
+      "refund_authorized": true,
+      "return_required": false,
+      "note": "Part of order arrived damaged; keep item."
+    }
+  }
+}

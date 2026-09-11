@@ -1,0 +1,112 @@
+{
+  "cases": [
+    {
+      "id": "case1_ambiguous_replay",
+      "title": "Ambiguous persistent side effect — no fresh replay",
+      "category": "safety",
+      "baseline_tool_operations": 1,
+      "expected_verdict": "BLOCK",
+      "expected_required_steps": ["verify_authoritative_state"],
+      "context": {
+        "effect_type": "mutation",
+        "persistent_side_effect": true,
+        "prior_outcome_state": "ambiguous",
+        "consequence_level": "high",
+        "replay_type": "uncorrelated",
+        "prior": {"op_id": "op_prior1"},
+        "capabilities": {"native_safe_replay": "unavailable", "state_verification": "available"},
+        "required_steps_satisfied": []
+      }
+    },
+    {
+      "id": "case2_readonly_timeout",
+      "title": "Read-only timeout — retry allowed",
+      "category": "negative_control",
+      "baseline_tool_operations": 1,
+      "expected_verdict": "ALLOW",
+      "expected_required_steps": [],
+      "context": {
+        "effect_type": "read",
+        "persistent_side_effect": false,
+        "prior_outcome_state": "ambiguous",
+        "consequence_level": "low",
+        "replay_type": "uncorrelated",
+        "prior": {"op_id": "op_read1"},
+        "capabilities": {"native_safe_replay": "unavailable"},
+        "required_steps_satisfied": []
+      }
+    },
+    {
+      "id": "case3_precommit_failure",
+      "title": "Definitive precommit failure — correction/retry allowed",
+      "category": "negative_control",
+      "baseline_tool_operations": 1,
+      "expected_verdict": "ALLOW",
+      "expected_required_steps": [],
+      "context": {
+        "effect_type": "mutation",
+        "persistent_side_effect": true,
+        "prior_outcome_state": "precommit_failure",
+        "consequence_level": "high",
+        "replay_type": "uncorrelated",
+        "prior": {"op_id": "op_pre1"},
+        "capabilities": {"native_safe_replay": "unavailable"},
+        "required_steps_satisfied": []
+      }
+    },
+    {
+      "id": "case4_successful_mutation",
+      "title": "Normal successful mutation — continue",
+      "category": "benign",
+      "baseline_tool_operations": 1,
+      "expected_verdict": "ALLOW",
+      "expected_required_steps": [],
+      "context": {
+        "effect_type": "mutation",
+        "persistent_side_effect": true,
+        "prior_outcome_state": "success",
+        "consequence_level": "high",
+        "replay_type": "none",
+        "prior": {"op_id": "op_ok1"},
+        "capabilities": {"native_safe_replay": "unavailable"},
+        "required_steps_satisfied": []
+      }
+    },
+    {
+      "id": "case5_native_safe_replay",
+      "title": "Ambiguous + native safe replay available",
+      "category": "safety",
+      "baseline_tool_operations": 1,
+      "expected_verdict": "BLOCK",
+      "expected_required_steps": ["preserve_operation_identity"],
+      "context": {
+        "effect_type": "mutation",
+        "persistent_side_effect": true,
+        "prior_outcome_state": "ambiguous",
+        "consequence_level": "high",
+        "replay_type": "uncorrelated",
+        "prior": {"op_id": "op_native1"},
+        "capabilities": {"native_safe_replay": "available"},
+        "required_steps_satisfied": []
+      }
+    },
+    {
+      "id": "case6_verification_fallback",
+      "title": "Ambiguous + verification available, no native replay",
+      "category": "safety",
+      "baseline_tool_operations": 1,
+      "expected_verdict": "BLOCK",
+      "expected_required_steps": ["verify_authoritative_state"],
+      "context": {
+        "effect_type": "mutation",
+        "persistent_side_effect": true,
+        "prior_outcome_state": "ambiguous",
+        "consequence_level": "high",
+        "replay_type": "uncorrelated",
+        "prior": {"op_id": "op_verify1"},
+        "capabilities": {"native_safe_replay": "unavailable", "state_verification": "available"},
+        "required_steps_satisfied": []
+      }
+    }
+  ]
+}

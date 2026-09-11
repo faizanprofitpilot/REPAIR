@@ -1,0 +1,10 @@
+{
+  "payment_intent": "pi_3UEXbjChwewYxXGK0v6WGtRx",
+  "idempotency_key": "repair-preflight-5500447faa88",
+  "refund_1": "re_3UEXbjChwewYxXGK0ZuwSMda",
+  "refund_2": "re_3UEXbjChwewYxXGK0ZuwSMda",
+  "refund_count": 1,
+  "same_id": true,
+  "header_passthrough_ok": true,
+  "native_safe_replay": "available"
+}

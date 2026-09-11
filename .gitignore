@@ -28,6 +28,7 @@ runs/
 !runs/.gitkeep
 !runs/golden/
 !runs/golden/**
+artifacts/
 
 # IDE / OS
 .idea/

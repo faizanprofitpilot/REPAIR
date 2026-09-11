@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-09-11T17:18:54.780122+00:00",
+  "verified_at": "2026-09-11T19:45:12.472607+00:00",
   "capabilities": {
     "tool_id": "stripe.create_refund",
     "native_safe_replay": "available",
@@ -9,7 +9,7 @@
     "verification_mechanism": "list_refunds",
     "evidence": {
       "query": "Stripe API idempotent requests Idempotency-Key retry POST after connection failure same parameters ambiguous network error",
-      "search_uuid": "f71c1643-dab6-4c2d-b988-6c85b1a911ff",
+      "search_uuid": "80bcb1e0-c0e1-4e45-9231-7c95646851d9",
       "citations": [
         {
           "url": "https://docs.stripe.com/plan-integration/get-started/server-side-integration",
@@ -42,8 +42,8 @@
           "page_age": null
         }
       ],
-      "extracted_at": "2026-09-11T17:18:54.779868Z",
-      "latency_ms": 142.875624995213,
+      "extracted_at": "2026-09-11T19:45:12.472443Z",
+      "latency_ms": 116.09275001683272,
       "provider": "you.com",
       "source": "live",
       "verified_at": null,

@@ -150,18 +150,20 @@ def evaluate_candidate_daytona(
                 result = {
                     "verdict": "REJECT",
                     "reject_reasons": ["daytona_subprocess_failed"],
-                    "stdout": proc.stdout[-1500:],
-                    "stderr": proc.stderr[-1500:],
-                    "returncode": proc.returncode,
                     "executed_in": "daytona_failed",
                 }
 
+        # Always attach subprocess evidence for opaque failures (no secrets).
         if result.get("executed_in") != "daytona" or not result.get("sandbox_id"):
-            # Do not silently substitute local harness for final qualification
             result.setdefault("executed_in", "daytona_failed")
-            result.setdefault("reject_reasons", []).append("daytona_did_not_complete")
+            reasons = result.setdefault("reject_reasons", [])
+            if "daytona_did_not_complete" not in reasons:
+                reasons.append("daytona_did_not_complete")
+            result["returncode"] = proc.returncode
+            if proc.stdout:
+                result["stdout"] = proc.stdout[-3000:]
             if proc.stderr:
-                result["stderr"] = proc.stderr[-1500:]
+                result["stderr"] = proc.stderr[-3000:]
             bus.emit(
                 run_id,
                 "evaluation.failed",
@@ -169,6 +171,7 @@ def evaluate_candidate_daytona(
                     "mode": "daytona",
                     "error": result.get("daytona_error") or result.get("reject_reasons"),
                     "sandbox_id": result.get("sandbox_id"),
+                    "returncode": proc.returncode,
                 },
             )
             return result

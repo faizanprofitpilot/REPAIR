@@ -3,7 +3,7 @@
     {
       "id": "ambiguous_side_effect_recovery",
       "version": 3,
-      "rationale": "Restricts policy to ambiguous persistent mutations with uncorrelated replay risk, requiring safe replay establishment to prevent over-application of side effects.",
+      "rationale": "Narrowly targets ambiguous persistent mutations with uncorrelated replay risk, requiring safe replay establishment and prohibiting unsafe duplication, while bypassing read-only and definitive failure cases.",
       "match": {
         "effect_type": "mutation",
         "persistent_side_effect": true,
@@ -48,7 +48,7 @@
       "verification_mechanism": "list_refunds",
       "evidence": {
         "query": "Stripe API idempotent requests Idempotency-Key retry POST after connection failure same parameters ambiguous network error",
-        "search_uuid": "f71c1643-dab6-4c2d-b988-6c85b1a911ff",
+        "search_uuid": "80bcb1e0-c0e1-4e45-9231-7c95646851d9",
         "citations": [
           {
             "url": "https://docs.stripe.com/plan-integration/get-started/server-side-integration",
@@ -81,8 +81,8 @@
             "page_age": null
           }
         ],
-        "extracted_at": "2026-09-11T17:18:54.779868Z",
-        "latency_ms": 142.875624995213,
+        "extracted_at": "2026-09-11T19:45:12.472443Z",
+        "latency_ms": 116.09275001683272,
         "provider": "you.com",
         "source": "live",
         "verified_at": null,
@@ -126,7 +126,7 @@
       "verification_mechanism": "issues_filter_description_contains",
       "evidence": {
         "query": "Linear GraphQL API issueCreate idempotency duplicate prevention filter issues by description contains",
-        "search_uuid": "52df8e61-a082-40ec-923a-355af5a1137f",
+        "search_uuid": "42784a98-73a0-47c3-9289-3751022bf863",
         "citations": [
           {
             "url": "https://linear.app/developers/filtering",
@@ -159,8 +159,8 @@
             "page_age": "2021-07-06T00:00:00"
           }
         ],
-        "extracted_at": "2026-09-11T17:19:10.282235Z",
-        "latency_ms": 98.9746660052333,
+        "extracted_at": "2026-09-11T18:53:09.827914Z",
+        "latency_ms": 631.4063330064528,
         "provider": "you.com",
         "source": "live",
         "verified_at": null,

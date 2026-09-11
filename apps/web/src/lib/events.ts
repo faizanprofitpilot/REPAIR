@@ -228,6 +228,7 @@ export function deriveModel(events: RepairEvent[]): DemoModel {
           m.act = 3;
           m.domain = "linear";
           m.controlRun = Boolean(p.frozen);
+          // This run's gate application only — do not wipe frozen/repaired counts.
           m.ruleInstalled = !p.frozen;
           m.linear.liveCount = 0;
           m.decision = "IDLE";
@@ -236,6 +237,8 @@ export function deriveModel(events: RepairEvent[]): DemoModel {
           m.requiredSteps = undefined;
           m.reasons = undefined;
           m.verifiedRef = undefined;
+          // Reset prevented only when starting the repaired transfer (fresh climax).
+          if (!p.frozen) m.linear.prevented = false;
           setStage(m, "ENFORCE");
         }
         break;
@@ -537,10 +540,12 @@ export function deriveModel(events: RepairEvent[]): DemoModel {
 
       case "run.completed": {
         const scenario = str(p.scenario);
+        // Single-phase acts emit scenario-specific completion (not full_demo).
         if (scenario === "linear_holdout" && p.frozen === false) {
-          m.finalHero = m.climaxReached;
+          if (m.climaxReached) m.finalHero = true;
           setStage(m, "TRANSFER");
         }
+        // Do not set session-wide runDone from intermediate acts.
         if (scenario === "full_demo") {
           m.runDone = true;
           if (m.climaxReached) m.finalHero = true;
@@ -548,7 +553,7 @@ export function deriveModel(events: RepairEvent[]): DemoModel {
         break;
       }
       case "run.failed": {
-        m.runDone = true;
+        // Scoped failure text for UI; page gates "running" by activeRunId.
         m.runFailed = str(p.error) || "run failed";
         break;
       }

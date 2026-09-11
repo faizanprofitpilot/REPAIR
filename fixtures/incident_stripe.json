@@ -1,6 +1,6 @@
 {
-  "run_id": "demo-afb86f9ca7",
-  "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+  "run_id": "demo-34d35aae38",
+  "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
   "agent_result": {
     "mode": "scripted",
     "prompt_hash": "4e9228ebb3ae584c",
@@ -14,7 +14,7 @@
         },
         "result": {
           "ok": true,
-          "op_id": "op_e5678660",
+          "op_id": "op_87f0a199",
           "body": {
             "order_id": "ord_demo_001",
             "customer": "Avery Example",
@@ -48,7 +48,7 @@
       {
         "tool": "stripe_create_refund",
         "args": {
-          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+          "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
           "amount": 1290
         },
         "result": {
@@ -62,19 +62,19 @@
       {
         "tool": "stripe_create_refund",
         "args": {
-          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+          "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
           "amount": 1290
         },
         "result": {
           "ok": true,
-          "op_id": "op_dec385bf",
+          "op_id": "op_23e4e639",
           "body": {
-            "id": "re_3UEY66ChwewYxXGK0tarpW07",
+            "id": "re_3UEaE1ChwewYxXGK0CY8IHkT",
             "object": "refund",
             "amount": 1290,
-            "balance_transaction": "txn_3UEY66ChwewYxXGK0pKlOOhp",
-            "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
-            "created": 1789147130,
+            "balance_transaction": "txn_3UEaE1ChwewYxXGK0XHGXhBm",
+            "charge": "ch_3UEaE1ChwewYxXGK0SvaLpz7",
+            "created": 1789155309,
             "currency": "usd",
             "customer": null,
             "customer_account": null,
@@ -87,8 +87,8 @@
               "type": "card"
             },
             "metadata": {},
-            "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
-            "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+            "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
+            "payment_method": "pm_1UEaE1ChwewYxXGKlYnHp0Lu",
             "reason": null,
             "receipt_number": null,
             "source_transfer_reversal": null,
@@ -122,17 +122,17 @@
     "refunded_cents": 2580,
     "refund_count": 2,
     "refund_ids": [
-      "re_3UEY66ChwewYxXGK0tarpW07",
-      "re_3UEY66ChwewYxXGK0GanEJ7U"
+      "re_3UEaE1ChwewYxXGK0CY8IHkT",
+      "re_3UEaE1ChwewYxXGK0pvtu3HM"
     ],
     "over_refund_cents": 1290,
-    "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov"
+    "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm"
   },
   "prompt_hash": "4e9228ebb3ae584c",
   "frozen": true,
   "ledger": [
     {
-      "op_id": "op_e5678660",
+      "op_id": "op_87f0a199",
       "intent_key": "83ed83201dc5049d",
       "tool_id": "stripe.get_order",
       "params": {
@@ -168,16 +168,16 @@
         }
       },
       "identity_material": null,
-      "created_at": "2026-09-11T17:18:47.768021Z",
-      "updated_at": "2026-09-11T17:18:47.768178Z",
+      "created_at": "2026-09-11T19:35:06.592233Z",
+      "updated_at": "2026-09-11T19:35:06.592389Z",
       "error": null
     },
     {
-      "op_id": "op_9034859c",
-      "intent_key": "9988ff35383817c9",
+      "op_id": "op_e554506a",
+      "intent_key": "e395e518a54a3bc7",
       "tool_id": "stripe.create_refund",
       "params": {
-        "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+        "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
         "amount": 1290
       },
       "outcome_state": "ambiguous",
@@ -186,12 +186,12 @@
         "ok": true,
         "status_code": 200,
         "body": {
-          "id": "re_3UEY66ChwewYxXGK0GanEJ7U",
+          "id": "re_3UEaE1ChwewYxXGK0pvtu3HM",
           "object": "refund",
           "amount": 1290,
-          "balance_transaction": "txn_3UEY66ChwewYxXGK0idD5HHU",
-          "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
-          "created": 1789147128,
+          "balance_transaction": "txn_3UEaE1ChwewYxXGK0J2en4Bt",
+          "charge": "ch_3UEaE1ChwewYxXGK0SvaLpz7",
+          "created": 1789155307,
           "currency": "usd",
           "customer": null,
           "customer_account": null,
@@ -204,8 +204,8 @@
             "type": "card"
           },
           "metadata": {},
-          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
-          "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+          "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
+          "payment_method": "pm_1UEaE1ChwewYxXGKlYnHp0Lu",
           "reason": null,
           "receipt_number": null,
           "source_transfer_reversal": null,
@@ -213,29 +213,29 @@
           "transfer_reversal": null
         }
       },
-      "identity_material": "repair-op_9034859c",
-      "created_at": "2026-09-11T17:18:47.768542Z",
-      "updated_at": "2026-09-11T17:18:49.556602Z",
+      "identity_material": "repair-op_e554506a",
+      "created_at": "2026-09-11T19:35:06.592796Z",
+      "updated_at": "2026-09-11T19:35:08.051239Z",
       "error": "transport interrupted"
     },
     {
-      "op_id": "op_dec385bf",
-      "intent_key": "9988ff35383817c9",
+      "op_id": "op_23e4e639",
+      "intent_key": "e395e518a54a3bc7",
       "tool_id": "stripe.create_refund",
       "params": {
-        "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+        "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
         "amount": 1290
       },
       "outcome_state": "success",
       "agent_visible_result": {
         "ok": true,
         "body": {
-          "id": "re_3UEY66ChwewYxXGK0tarpW07",
+          "id": "re_3UEaE1ChwewYxXGK0CY8IHkT",
           "object": "refund",
           "amount": 1290,
-          "balance_transaction": "txn_3UEY66ChwewYxXGK0pKlOOhp",
-          "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
-          "created": 1789147130,
+          "balance_transaction": "txn_3UEaE1ChwewYxXGK0XHGXhBm",
+          "charge": "ch_3UEaE1ChwewYxXGK0SvaLpz7",
+          "created": 1789155309,
           "currency": "usd",
           "customer": null,
           "customer_account": null,
@@ -248,8 +248,8 @@
             "type": "card"
           },
           "metadata": {},
-          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
-          "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+          "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
+          "payment_method": "pm_1UEaE1ChwewYxXGKlYnHp0Lu",
           "reason": null,
           "receipt_number": null,
           "source_transfer_reversal": null,
@@ -260,12 +260,12 @@
       "true_external_result": {
         "ok": true,
         "body": {
-          "id": "re_3UEY66ChwewYxXGK0tarpW07",
+          "id": "re_3UEaE1ChwewYxXGK0CY8IHkT",
           "object": "refund",
           "amount": 1290,
-          "balance_transaction": "txn_3UEY66ChwewYxXGK0pKlOOhp",
-          "charge": "ch_3UEY66ChwewYxXGK0ltJfF3G",
-          "created": 1789147130,
+          "balance_transaction": "txn_3UEaE1ChwewYxXGK0XHGXhBm",
+          "charge": "ch_3UEaE1ChwewYxXGK0SvaLpz7",
+          "created": 1789155309,
           "currency": "usd",
           "customer": null,
           "customer_account": null,
@@ -278,8 +278,8 @@
             "type": "card"
           },
           "metadata": {},
-          "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
-          "payment_method": "pm_1UEY66ChwewYxXGKW2TmS561",
+          "payment_intent": "pi_3UEaE1ChwewYxXGK0TKthbJm",
+          "payment_method": "pm_1UEaE1ChwewYxXGKlYnHp0Lu",
           "reason": null,
           "receipt_number": null,
           "source_transfer_reversal": null,
@@ -287,9 +287,9 @@
           "transfer_reversal": null
         }
       },
-      "identity_material": "repair-op_dec385bf",
-      "created_at": "2026-09-11T17:18:49.558280Z",
-      "updated_at": "2026-09-11T17:18:51.174244Z",
+      "identity_material": "repair-op_23e4e639",
+      "created_at": "2026-09-11T19:35:08.052849Z",
+      "updated_at": "2026-09-11T19:35:09.763781Z",
       "error": null
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-09-11T17:19:10.282487+00:00",
+  "verified_at": "2026-09-11T18:53:09.828265+00:00",
   "capabilities": {
     "tool_id": "linear.create_issue",
     "native_safe_replay": "unavailable",
@@ -9,7 +9,7 @@
     "verification_mechanism": "issues_filter_description_contains",
     "evidence": {
       "query": "Linear GraphQL API issueCreate idempotency duplicate prevention filter issues by description contains",
-      "search_uuid": "52df8e61-a082-40ec-923a-355af5a1137f",
+      "search_uuid": "42784a98-73a0-47c3-9289-3751022bf863",
       "citations": [
         {
           "url": "https://linear.app/developers/filtering",
@@ -42,8 +42,8 @@
           "page_age": "2021-07-06T00:00:00"
         }
       ],
-      "extracted_at": "2026-09-11T17:19:10.282235Z",
-      "latency_ms": 98.9746660052333,
+      "extracted_at": "2026-09-11T18:53:09.827914Z",
+      "latency_ms": 631.4063330064528,
       "provider": "you.com",
       "source": "live",
       "verified_at": null,

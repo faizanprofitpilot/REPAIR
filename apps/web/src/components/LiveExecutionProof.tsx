@@ -25,7 +25,7 @@ export function LiveExecutionProof({
           </span>
         </div>
         <div className="proof__meta mono">
-          <span>run {runId ? shortId(runId, "run") : "—"}</span>
+          <span>active {runId ? shortId(runId, "run") : "—"}</span>
           <span>seq {String(latestSeq).padStart(3, "0")}</span>
         </div>
       </header>

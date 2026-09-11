@@ -1,7 +1,7 @@
 {
   "id": "ambiguous_side_effect_recovery",
   "version": 3,
-  "rationale": "Restricts policy to ambiguous persistent mutations with uncorrelated replay risk, requiring safe replay establishment to prevent over-application of side effects.",
+  "rationale": "Narrowly targets ambiguous persistent mutations with uncorrelated replay risk, requiring safe replay establishment and prohibiting unsafe duplication, while bypassing read-only and definitive failure cases.",
   "match": {
     "effect_type": "mutation",
     "persistent_side_effect": true,

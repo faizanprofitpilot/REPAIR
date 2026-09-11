@@ -116,6 +116,74 @@ a:hover {
   display: flex;
   gap: 0.6rem;
 }
+.top__actions--paced {
+  align-items: flex-start;
+  gap: 1rem;
+}
+.act-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  max-width: 22rem;
+}
+.act-cta__eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+}
+.act-cta__hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.35;
+}
+.btn-debug {
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.45;
+  padding: 0.2rem 0;
+}
+.btn-debug:hover {
+  opacity: 0.85;
+}
+.btn-debug:disabled {
+  cursor: default;
+  opacity: 0.25;
+}
+.act-indicator {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.act-indicator__item {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.15rem;
+}
+.act-indicator__item.is-active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+}
+.act-indicator__item.is-done {
+  color: var(--lime);
+}
 .btn {
   font-family: var(--font-display);
   font-size: 0.9rem;

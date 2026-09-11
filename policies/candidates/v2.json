@@ -1,7 +1,7 @@
 {
   "id": "ambiguous_side_effect_recovery",
   "version": 2,
-  "rationale": "To prevent financial inconsistencies caused by ambiguous transaction states and uncorrelated replay of persistent mutations, enforce strict verification and correlation for all persistent side effects.",
+  "rationale": "To prevent overcompensation and inconsistent outcomes caused by ambiguous or uncorrelated replay of persistent mutations, enforce strict verification and correlation for all persistent side effects.",
   "match": {
     "effect_type": "mutation",
     "persistent_side_effect": true,

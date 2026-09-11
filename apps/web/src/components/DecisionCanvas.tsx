@@ -11,7 +11,7 @@ type Tone = "neutral" | "allow" | "amber" | "block" | "verify" | "success";
 function headline(m: DemoModel): { tone: Tone; title: string; sub: string } {
   switch (m.decision) {
     case "PROPOSED":
-      return { tone: "neutral", title: "AGENT PROPOSED", sub: humanTool(m.proposedTool) };
+      return { tone: "neutral", title: "AGENT TRIES AGAIN", sub: `tool proposed · ${humanTool(m.proposedTool)}` };
     case "ALLOW":
       return {
         tone: "allow",
@@ -21,26 +21,28 @@ function headline(m: DemoModel): { tone: Tone; title: string; sub: string } {
     case "AMBIGUOUS":
       return {
         tone: "amber",
-        title: "RESPONSE LOST",
-        sub: "Mutation committed externally. Agent saw a transport failure.",
+        title: "IT WORKED — BUT THE AGENT NEVER SAW SUCCESS",
+        sub: "CommitThenDisconnect",
       };
     case "BLOCKED":
       return {
         tone: "block",
-        title: "RUNTIME BLOCKED",
-        sub: `Unsafe replay of ${humanTool(m.proposedTool)} stopped before it reached One.`,
+        title: "STOPPED BEFORE IT RAN",
+        sub: `runtime.blocked · ${humanTool(m.proposedTool)} never reached One`,
       };
     case "VERIFYING":
       return {
         tone: "verify",
-        title: "VERIFYING AUTHORITATIVE STATE",
-        sub: "Runtime is looking up the original operation by its marker.",
+        title: "CHECKING IF IT ALREADY HAPPENED",
+        sub: "authoritative verification",
       };
     case "VERIFIED":
       return {
         tone: "verify",
-        title: "OPERATION ALREADY COMPLETED",
-        sub: m.verifiedRef ? `Found ${m.verifiedRef}. No second mutation needed.` : "Existing operation found.",
+        title: "ALREADY DONE",
+        sub: m.verifiedRef
+          ? `Found ${m.verifiedRef}. No second action needed.`
+          : "Existing operation found.",
       };
     case "PREVENTED":
       return {
@@ -62,28 +64,39 @@ export function DecisionCanvas({ m }: { m: DemoModel }) {
   const task = m.domain === "linear" ? TASK_LINEAR : TASK_STRIPE;
   const showBlockChain = ["BLOCKED", "VERIFYING", "VERIFIED", "PREVENTED"].includes(m.decision);
 
-  const chain: Array<{ key: string; label: string; reached: boolean }> = [
-    { key: "proposed", label: `Agent proposed replay · ${humanTool(m.proposedTool)}`, reached: true },
-    { key: "blocked", label: "Runtime blocked", reached: true },
+  const chain: Array<{ key: string; label: string; sub?: string; reached: boolean }> = [
+    {
+      key: "proposed",
+      label: `Agent tries again · ${humanTool(m.proposedTool)}`,
+      reached: true,
+    },
+    { key: "blocked", label: "Stopped before it ran", sub: "runtime.blocked", reached: true },
     {
       key: "verify",
-      label: "Verifying authoritative state",
+      label: "Checking if it already happened",
+      sub: "authoritative verification",
       reached: ["VERIFYING", "VERIFIED", "PREVENTED"].includes(m.decision),
     },
     {
       key: "verified",
-      label: m.verifiedRef ? `Operation already completed · ${m.verifiedRef}` : "Operation already completed",
+      label: m.verifiedRef ? `Already done · ${m.verifiedRef}` : "Already done",
       reached: ["VERIFIED", "PREVENTED"].includes(m.decision),
     },
-    { key: "prevented", label: "Duplicate prevented", reached: m.decision === "PREVENTED" },
+    {
+      key: "prevented",
+      label: "Duplicate prevented · never sent to One",
+      reached: m.decision === "PREVENTED",
+    },
   ];
 
   return (
     <section className={`canvas tone-${h.tone}`} key={`canvas-${m.decisionKey}`}>
       <header className="canvas__head">
         <div>
-          <p className="eyebrow">Runtime authority</p>
-          <h2 className="canvas__title">Decision</h2>
+          <p className="eyebrow">Safety gate</p>
+          <h2 className="canvas__title">
+            Runtime decision
+          </h2>
         </div>
         <div className="canvas__domain">
           {m.domain === "linear" && (
@@ -91,7 +104,9 @@ export function DecisionCanvas({ m }: { m: DemoModel }) {
           )}
           {m.domain === "stripe" && <span className="pill">Stripe · test mode</span>}
           <span className={`pill ${m.ruleInstalled ? "pill--rule" : ""}`}>
-            {m.ruleInstalled ? `Rule v${m.promotedVersion ?? 3} installed` : "No rule installed"}
+            {m.ruleInstalled
+              ? `After learning · V${m.promotedVersion ?? 3}`
+              : "Before learning · no rule"}
           </span>
         </div>
       </header>
@@ -102,7 +117,9 @@ export function DecisionCanvas({ m }: { m: DemoModel }) {
         {m.domain === "linear" && (
           <p className="canvas__invariant">
             Same agent. Same prompt. Same tools. Same fault.
-            {m.ruleInstalled ? " Same learned runtime rule." : " No rule — control run."}
+            {m.ruleInstalled
+              ? " Same learned safety rule."
+              : " Same situation, no safety rule yet."}
           </p>
         )}
       </div>
@@ -117,7 +134,10 @@ export function DecisionCanvas({ m }: { m: DemoModel }) {
           {chain.map((c) => (
             <li key={c.key} className={`chain__step ${c.reached ? "is-reached" : ""}`}>
               <span className="chain__marker" />
-              <span>{c.label}</span>
+              <span>
+                {c.label}
+                {c.sub ? <span className="chain__sub"> · {c.sub}</span> : null}
+              </span>
             </li>
           ))}
         </ol>
@@ -129,15 +149,21 @@ export function DecisionCanvas({ m }: { m: DemoModel }) {
           </div>
           <div>
             <dt>Installed rule</dt>
-            <dd className="mono">{m.ruleInstalled ? m.matchedRule || `v${m.promotedVersion ?? 3}` : "none"}</dd>
+            <dd className="mono">
+              {m.ruleInstalled ? m.matchedRule || `v${m.promotedVersion ?? 3}` : "none"}
+            </dd>
           </div>
           <div>
             <dt>Fault</dt>
-            <dd>{m.faultActive ? "Transport failure simulated" : "Ready"}</dd>
+            <dd>{m.faultActive ? "CommitThenDisconnect" : "Ready"}</dd>
           </div>
           <div>
-            <dt>Required before replay</dt>
-            <dd>{m.requiredSteps?.length ? m.requiredSteps.map(humanRequire).join(", ") : "—"}</dd>
+            <dt>Required before retry</dt>
+            <dd>
+              {m.requiredSteps?.length
+                ? m.requiredSteps.map(humanRequire).join(", ")
+                : "—"}
+            </dd>
           </div>
         </dl>
       )}

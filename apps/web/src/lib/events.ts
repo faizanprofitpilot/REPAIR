@@ -576,10 +576,10 @@ export function humanTool(tool?: string): string {
 
 export function humanRequire(step: string): string {
   const map: Record<string, string> = {
-    establish_safe_replay: "establish a safe replay",
-    verify_authoritative_state: "verify authoritative state",
-    preserve_operation_identity: "preserve the original operation identity",
-    correlated_replay: "replay only with the original identity",
+    establish_safe_replay: "retry only if it is the same operation",
+    verify_authoritative_state: "must check first",
+    preserve_operation_identity: "keep the original operation identity",
+    correlated_replay: "retry only if it is the same operation",
   };
   return map[step] || step.replace(/_/g, " ");
 }
@@ -636,14 +636,14 @@ export function humanReject(reasons: string[] = []): string {
 export function capabilityConclusion(r?: ResearchView): string {
   if (!r) return "";
   if (r.nativeSafeReplay === "available") {
-    return `Safe replay is available natively${
+    return `Safe retry is available natively${
       r.mechanism ? ` via ${humanMechanism(r.mechanism)}` : ""
-    }. A retry can preserve the original operation identity.`;
+    }. A retry can keep the original operation identity.`;
   }
   if (r.stateVerification === "available") {
-    return `No native safe replay. Authoritative verification is available${
+    return `No native safe retry. Checking if it already happened is available${
       r.verificationMechanism ? ` via ${humanMechanism(r.verificationMechanism)}` : ""
-    } — the runtime must check before any replay.`;
+    } — the gate must check before any retry.`;
   }
   return "Capability unresolved.";
 }
@@ -785,8 +785,8 @@ export function deriveProofRows(events: RepairEvent[]): ProofRow[] {
             pendingBlocked = null;
           } else if (VERIFY_TOOLS.has(tool)) {
             // First outbound after block is verification/read and create never started
-            push(e, "ONE", "NO CREATE DISPATCH", {
-              evidence: "NO OUTBOUND MUTATION",
+            push(e, "ONE", "NEVER SENT TO ONE", {
+              evidence: "no tool.started for create",
               tone: "block",
               keySuffix: "nodispatch",
             });
@@ -835,7 +835,7 @@ export function deriveProofRows(events: RepairEvent[]): ProofRow[] {
         const count = Number(p.refund_count ?? 0);
         const cents = Number(p.refunded_cents ?? 0);
         push(e, "WORLD", `${count} refunds · ${money(cents)}`, {
-          evidence: count >= 2 ? "DUPLICATE MUTATION" : undefined,
+          evidence: count >= 2 ? "CUSTOMER REFUNDED TWICE" : undefined,
           tone: count >= 2 ? "block" : "neutral",
         });
         break;
@@ -886,8 +886,11 @@ export function deriveProofRows(events: RepairEvent[]): ProofRow[] {
         const metrics = (p.metrics as Record<string, unknown>) || {};
         const executed = str(metrics.executed_in);
         const sandbox = str(metrics.sandbox_id);
-        push(e, "DAYTONA", `${shortId(sandbox, "uuid")} · V${p.version ?? "?"} REJECTED`, {
-          evidence: executed === "daytona" ? "executed_in=daytona" : executed,
+        push(e, "DAYTONA", `FIRST RULE TOO BROAD — REJECTED · V${p.version ?? "?"}`, {
+          evidence:
+            executed === "daytona"
+              ? `sandbox ${shortId(sandbox, "uuid")} · audit logged`
+              : executed,
           live: executed === "daytona",
           tone: "amber",
         });
@@ -898,8 +901,11 @@ export function deriveProofRows(events: RepairEvent[]): ProofRow[] {
         const metrics = (p.metrics as Record<string, unknown>) || {};
         const executed = str(metrics.executed_in);
         const sandbox = str(metrics.sandbox_id);
-        push(e, "DAYTONA", `${shortId(sandbox, "uuid")} · V${p.version ?? "?"} PROMOTED`, {
-          evidence: executed === "daytona" ? "executed_in=daytona" : executed,
+        push(e, "DAYTONA", `REFINED RULE PASSED — INSTALLED · V${p.version ?? "?"}`, {
+          evidence:
+            executed === "daytona"
+              ? `sandbox ${shortId(sandbox, "uuid")} · audit logged`
+              : executed,
           live: executed === "daytona",
           tone: "success",
         });
@@ -912,7 +918,7 @@ export function deriveProofRows(events: RepairEvent[]): ProofRow[] {
           pendingBlocked = { op_id: opId, tool_id: tool, seq: e.seq };
           noDispatchEmitted = false;
         }
-        push(e, "RUNTIME", `BLOCKED ${humanTool(tool)}`, {
+        push(e, "RUNTIME", `STOPPED BEFORE IT RAN · ${humanTool(tool)}`, {
           evidence: shortId(opId, "run"),
           tone: "block",
         });
@@ -920,8 +926,7 @@ export function deriveProofRows(events: RepairEvent[]): ProofRow[] {
       }
 
       case "verification.started": {
-        // Do NOT emit NO CREATE DISPATCH here — wait for tool.started verify/read
-        push(e, "RUNTIME", "authoritative verification required", {
+        push(e, "RUNTIME", "Must check first", {
           evidence: shortId(str(p.op_id), "run"),
         });
         break;
@@ -948,6 +953,6 @@ export function deriveProofRows(events: RepairEvent[]): ProofRow[] {
     }
   }
 
-  return rows.slice(-6);
+  return rows.slice(-8);
 }
 

@@ -5,6 +5,7 @@ import {
   humanReject,
   policyBreadth,
   policyToEnglish,
+  shortId,
   type DemoModel,
   type GateView,
 } from "@/lib/events";
@@ -15,22 +16,24 @@ function GateRow({ g }: { g: GateView }) {
     <div className={`gate ${promoted ? "gate--promote" : "gate--reject"}`} key={`${g.version}-${g.verdict}`}>
       <div className="gate__row">
         <span className="gate__version">V{g.version}</span>
-        <span className="gate__stamp">{g.verdict}</span>
+        <span className="gate__stamp">{promoted ? "INSTALLED" : "REJECTED"}</span>
       </div>
       <p className="gate__reason">
         {promoted
-          ? "Passes every safety case with zero unnecessary verification."
-          : `Reason: ${humanReject(g.reasons)}`}
+          ? "REFINED RULE PASSED — INSTALLED"
+          : `FIRST RULE TOO BROAD — REJECTED · ${humanReject(g.reasons)}`}
+      </p>
+      <p className="gate__meta">
+        Qualified in an ephemeral Daytona sandbox
       </p>
       <p className="gate__meta mono">
-        executed_in={g.executed_in || "—"}
-        {g.sandbox_id ? ` · sandbox ${g.sandbox_id}` : ""}
+        sandbox {shortId(g.sandbox_id, "uuid")} · audit logged
+        {g.executed_in ? ` · ${g.executed_in}` : ""}
       </p>
       {g.metrics && (
         <p className="gate__metrics">
           safety {String(g.metrics.safety_cases_passed)} · controls {String(g.metrics.negative_controls_passed)} ·
-          verdicts {String(g.metrics.verdict_correctness)} · extra verifications{" "}
-          {String(g.metrics.unnecessary_verification_operations)}
+          verdicts {String(g.metrics.verdict_correctness)}
         </p>
       )}
     </div>
@@ -44,11 +47,11 @@ export function ContextCard({ m }: { m: DemoModel }) {
     return (
       <aside className="context">
         <p className="eyebrow">What you are about to see</p>
-        <h3>An agent that turns a failure into a runtime rule</h3>
+        <h3>An agent that turns a failure into a safety rule</h3>
         <ol className="context__acts">
           <li><strong>Fail.</strong> A refund commits, the response is lost, the agent retries blindly.</li>
-          <li><strong>Learn.</strong> CrewAI diagnoses, You.com researches, Daytona tests candidate rules.</li>
-          <li><strong>Enforce.</strong> Same agent in an unseen domain — the runtime blocks the replay.</li>
+          <li><strong>Learn.</strong> CrewAI diagnoses, You.com researches, Daytona qualifies draft rules.</li>
+          <li><strong>Enforce.</strong> Same agent in an unseen domain — the safety gate stops the retry.</li>
         </ol>
       </aside>
     );
@@ -58,10 +61,14 @@ export function ContextCard({ m }: { m: DemoModel }) {
     return (
       <aside className="context">
         <p className="eyebrow">{stage === "FAIL" ? "What went wrong" : "Live action"}</p>
-        <h3>{stage === "FAIL" ? "The agent could not tell success from failure" : "Real Stripe test-mode action via One"}</h3>
+        <h3>
+          {stage === "FAIL"
+            ? "The agent could not tell success from failure"
+            : "Real Stripe test-mode action via One"}
+        </h3>
         <p className="context__body">
           {stage === "FAIL"
-            ? "The mutation committed. The response never came back. Without a rule, an ordinary retry is a second mutation."
+            ? "The action that changes the outside world already succeeded. The response never came back. Without a rule, an ordinary retry does it again."
             : "The support agent reads the order and issues the approved refund through One."}
         </p>
       </aside>
@@ -92,7 +99,11 @@ export function ContextCard({ m }: { m: DemoModel }) {
       <aside className="context context--youcom">
         <p className="eyebrow">
           You.com · live evidence{" "}
-          {r && <span className={`badge ${r.source === "live" ? "badge--live" : "badge--cached"}`}>{r.source.toUpperCase()}</span>}
+          {r && (
+            <span className={`badge ${r.source === "live" ? "badge--live" : "badge--cached"}`}>
+              {r.source.toUpperCase()}
+            </span>
+          )}
         </p>
         <h3>Research</h3>
         {r ? (
@@ -116,17 +127,20 @@ export function ContextCard({ m }: { m: DemoModel }) {
     const p = m.policies[m.policies.length - 1];
     return (
       <aside className="context context--crewai">
-        <p className="eyebrow">CrewAI · proposed rule {p?.version ? `· v${p.version}` : ""}</p>
+        <p className="eyebrow">CrewAI · draft rule {p?.version ? `· v${p.version}` : ""}</p>
         <h3>{p ? "Synthesized rule" : "Synthesizing…"}</h3>
         {p ? (
           <>
             <p className="context__rule">{policyToEnglish(p)}</p>
             <p className="context__muted">
-              {policyBreadth(p) === "broad" ? "Broad first draft — applies to every persistent mutation." : "Refined — applies only to ambiguous outcomes."} Domain-free by guard.
+              {policyBreadth(p) === "broad"
+                ? "Broad first draft — applies to every action that changes the outside world."
+                : "Refined — applies only when success or failure is unclear."}{" "}
+              Domain-free by guard.
             </p>
           </>
         ) : (
-          <p className="context__muted pulse">Drafting a domain-free runtime rule…</p>
+          <p className="context__muted pulse">Drafting a domain-free safety rule…</p>
         )}
       </aside>
     );
@@ -135,9 +149,11 @@ export function ContextCard({ m }: { m: DemoModel }) {
   if (stage === "TEST" || stage === "PROMOTE") {
     return (
       <aside className="context context--daytona">
-        <p className="eyebrow">Daytona sandbox · qualification</p>
-        <h3>{stage === "PROMOTE" ? "Rule promoted" : "Testing candidates"}</h3>
-        {m.gates.length === 0 && <p className="context__muted pulse">Running deterministic evaluation in a fresh sandbox…</p>}
+        <p className="eyebrow">Daytona · qualification</p>
+        <h3>{stage === "PROMOTE" ? "REFINED RULE PASSED — INSTALLED" : "Testing draft rule"}</h3>
+        {m.gates.length === 0 && (
+          <p className="context__muted pulse">Qualified in an ephemeral Daytona sandbox…</p>
+        )}
         {m.gates.map((g, i) => (
           <GateRow g={g} key={`${g.version}-${g.verdict}-${i}`} />
         ))}
@@ -148,7 +164,6 @@ export function ContextCard({ m }: { m: DemoModel }) {
     );
   }
 
-  // ENFORCE / TRANSFER
   const promoted = m.policies.find((p) => p.version === m.promotedVersion) || m.policies[m.policies.length - 1];
   const linearResearch = m.research.find((r) => r.tool_id.startsWith("linear"));
   return (
@@ -156,7 +171,8 @@ export function ContextCard({ m }: { m: DemoModel }) {
       <p className="eyebrow">Unseen domain</p>
       <h3>Linear · engineering escalation</h3>
       <p className="context__body">
-        Same agent. Same prompt. {m.ruleInstalled ? "Same learned runtime rule." : "No rule installed — control run."}
+        Same agent. Same prompt.{" "}
+        {m.ruleInstalled ? "Same learned safety rule." : "Same situation, no safety rule yet."}
       </p>
       {linearResearch && (
         <p className="context__muted">
@@ -168,7 +184,9 @@ export function ContextCard({ m }: { m: DemoModel }) {
       )}
       {m.ruleInstalled && promoted && (
         <>
-          <p className="eyebrow" style={{ marginTop: "0.9rem" }}>Installed rule v{promoted.version}</p>
+          <p className="eyebrow" style={{ marginTop: "0.9rem" }}>
+            Installed rule v{promoted.version}
+          </p>
           <p className="context__rule">{policyToEnglish(promoted)}</p>
         </>
       )}

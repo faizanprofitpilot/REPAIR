@@ -154,9 +154,9 @@ export default function Home() {
         <ContextCard m={m} />
       </div>
 
-      <WorldState m={m} />
-
       <LiveExecutionProof rows={proofRows} runId={runId} live={running} />
+
+      <WorldState m={m} />
 
       <footer className="foot">
         <SponsorStrip m={m} />

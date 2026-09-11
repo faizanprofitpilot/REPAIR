@@ -14,10 +14,11 @@ export function LiveExecutionProof({
   const latestSeq = rows.length ? rows[rows.length - 1].seq : 0;
 
   return (
-    <section className="proof" aria-label="Live execution proof">
+    <section className="proof" aria-label="What just ran">
       <header className="proof__head">
         <div className="proof__title">
-          <span className="proof__label">Live execution</span>
+          <span className="proof__label">What just ran</span>
+          <span className="proof__sublabel">Live execution</span>
           <span className={`proof__live ${live ? "is-live" : ""}`}>
             <span className="proof__dot" />
             {live ? "LIVE" : "IDLE"}

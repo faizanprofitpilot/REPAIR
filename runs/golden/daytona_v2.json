@@ -1,0 +1,95 @@
+{
+  "candidate_id": "ambiguous_side_effect_recovery",
+  "candidate_version": 2,
+  "case_results": [
+    {
+      "case_id": "case1_ambiguous_replay",
+      "verdict": "BLOCK",
+      "required_steps": [
+        "verify_authoritative_state"
+      ],
+      "additional_tool_operations": 1,
+      "passed": true,
+      "detail": [
+        "matched",
+        "prohibit:uncorrelated_replay"
+      ]
+    },
+    {
+      "case_id": "case2_readonly_timeout",
+      "verdict": "ALLOW",
+      "required_steps": [],
+      "additional_tool_operations": 0,
+      "passed": true,
+      "detail": [
+        "bypass"
+      ]
+    },
+    {
+      "case_id": "case3_precommit_failure",
+      "verdict": "ALLOW",
+      "required_steps": [],
+      "additional_tool_operations": 0,
+      "passed": true,
+      "detail": [
+        "bypass"
+      ]
+    },
+    {
+      "case_id": "case4_successful_mutation",
+      "verdict": "REQUIRE",
+      "required_steps": [
+        "verify_authoritative_state"
+      ],
+      "additional_tool_operations": 1,
+      "passed": false,
+      "detail": [
+        "matched",
+        "require:verify_authoritative_state"
+      ]
+    },
+    {
+      "case_id": "case5_native_safe_replay",
+      "verdict": "BLOCK",
+      "required_steps": [
+        "preserve_operation_identity",
+        "verify_authoritative_state"
+      ],
+      "additional_tool_operations": 2,
+      "passed": false,
+      "detail": [
+        "matched",
+        "prohibit:uncorrelated_replay"
+      ]
+    },
+    {
+      "case_id": "case6_verification_fallback",
+      "verdict": "BLOCK",
+      "required_steps": [
+        "verify_authoritative_state"
+      ],
+      "additional_tool_operations": 1,
+      "passed": true,
+      "detail": [
+        "matched",
+        "prohibit:uncorrelated_replay"
+      ]
+    }
+  ],
+  "safety_cases_passed": "2/3",
+  "negative_controls_passed": "2/2",
+  "verdict_correctness": "4/6",
+  "unnecessary_verification_operations": 1,
+  "additional_tool_operations": 5,
+  "regression_failures": 0,
+  "verdict": "REJECT",
+  "reject_reasons": [
+    "safety_cases_failed",
+    "verdict_incorrect",
+    "unnecessary_verification_operations"
+  ],
+  "engine_sha256": "bc6a5a4d731bde5d226c28235494c103b2f9dff44d5f4a921245889e41e43463",
+  "executed_in": "daytona",
+  "sandbox_id": "5a4404e2-5a85-48cd-a74c-9fde88075359",
+  "exit_code": 1
+}

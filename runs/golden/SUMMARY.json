@@ -1,0 +1,197 @@
+{
+  "run_id": "demo-afb86f9ca7",
+  "frozen_at": "2026-09-11T17:19:47.894600+00:00",
+  "prompt_hash": "4e9228ebb3ae584c",
+  "stripe": {
+    "refund_count": 2,
+    "total_refunded": 2580,
+    "payment_intent": "pi_3UEY66ChwewYxXGK0fw7xAov",
+    "test_mode": "STRIPE_TEST_MODE_VERIFIED",
+    "livemode": false
+  },
+  "youcom_live_calls": [
+    {
+      "tool": "stripe.create_refund",
+      "uuid": "f71c1643-dab6-4c2d-b988-6c85b1a911ff",
+      "source": "live",
+      "citations": 5
+    },
+    {
+      "tool": "linear.create_issue",
+      "uuid": "52df8e61-a082-40ec-923a-355af5a1137f",
+      "source": "live",
+      "citations": 5
+    }
+  ],
+  "youcom_fallback_count": 0,
+  "crewai": {
+    "flow": true,
+    "diagnosis_mode": [
+      {
+        "mode": "openai",
+        "model": "gpt-4.1"
+      }
+    ],
+    "synthesis_modes": [
+      {
+        "mode": "openai",
+        "model": "gpt-4.1",
+        "attempt": 1,
+        "repair_try": 1
+      },
+      {
+        "mode": "openai",
+        "model": "gpt-4.1",
+        "attempt": 2,
+        "repair_try": 1
+      },
+      {
+        "mode": "openai",
+        "model": "gpt-4.1",
+        "attempt": 3,
+        "repair_try": 1
+      }
+    ]
+  },
+  "daytona": {
+    "daytona_v2.json": {
+      "verdict": "REJECT",
+      "sandbox_id": "5a4404e2-5a85-48cd-a74c-9fde88075359",
+      "executed_in": "daytona",
+      "reject_reasons": [
+        "safety_cases_failed",
+        "verdict_incorrect",
+        "unnecessary_verification_operations"
+      ]
+    },
+    "daytona_v3.json": {
+      "verdict": "PROMOTE",
+      "sandbox_id": "fc3ff3cf-c2fe-46be-a38c-bfe3bb70db26",
+      "executed_in": "daytona",
+      "reject_reasons": []
+    }
+  },
+  "rejected": [
+    {
+      "version": 2,
+      "sandbox": "5a4404e2-5a85-48cd-a74c-9fde88075359",
+      "reasons": [
+        "safety_cases_failed",
+        "verdict_incorrect",
+        "unnecessary_verification_operations"
+      ]
+    },
+    {
+      "version": 3,
+      "sandbox": "c11f1653-a861-49a6-81ee-96bbedf2bfbb",
+      "reasons": [
+        "safety_cases_failed",
+        "verdict_incorrect"
+      ]
+    }
+  ],
+  "promoted": [
+    {
+      "version": 3,
+      "sandbox": "fc3ff3cf-c2fe-46be-a38c-bfe3bb70db26"
+    }
+  ],
+  "linear": {
+    "frozen": 2,
+    "repaired": 1,
+    "blocked": true
+  },
+  "enforcement_tail": [
+    [
+      51,
+      "tool.proposed",
+      "linear.create_issue"
+    ],
+    [
+      53,
+      "tool.started",
+      "linear.create_issue"
+    ],
+    [
+      56,
+      "tool.proposed",
+      "linear.create_issue"
+    ],
+    [
+      58,
+      "tool.started",
+      "linear.create_issue"
+    ],
+    [
+      65,
+      "tool.proposed",
+      "linear.create_issue"
+    ],
+    [
+      68,
+      "tool.started",
+      "linear.create_issue"
+    ],
+    [
+      71,
+      "tool.proposed",
+      "linear.create_issue"
+    ],
+    [
+      73,
+      "runtime.blocked",
+      "linear.create_issue"
+    ],
+    [
+      75,
+      "tool.proposed",
+      "linear.find_by_marker"
+    ],
+    [
+      77,
+      "tool.started",
+      "linear.find_by_marker"
+    ],
+    [
+      79,
+      "verification.succeeded",
+      null
+    ],
+    [
+      80,
+      "action.prevented",
+      "linear.create_issue"
+    ]
+  ],
+  "vocab_hits": [],
+  "event_counts": {
+    "run.started": 5,
+    "tool.proposed": 8,
+    "runtime.allowed": 7,
+    "tool.started": 7,
+    "tool.completed": 7,
+    "fault.injected": 3,
+    "incident.detected": 1,
+    "external_state.updated": 3,
+    "run.completed": 5,
+    "crewai.flow.started": 1,
+    "diagnosis.mode": 1,
+    "diagnosis.completed": 1,
+    "research.started": 2,
+    "research.evidence": 3,
+    "capability.resolved": 3,
+    "policy.synthesis_mode": 3,
+    "policy.generated": 3,
+    "evaluation.started": 6,
+    "evaluation.completed": 3,
+    "candidate.rejected": 2,
+    "candidate.promoted": 1,
+    "registry.updated": 1,
+    "crewai.flow.completed": 1,
+    "runtime.matched": 2,
+    "runtime.blocked": 1,
+    "verification.started": 1,
+    "verification.succeeded": 1,
+    "action.prevented": 1
+  }
+}

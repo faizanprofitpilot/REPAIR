@@ -1,0 +1,87 @@
+{
+  "candidate_id": "ambiguous_side_effect_recovery",
+  "candidate_version": 3,
+  "case_results": [
+    {
+      "case_id": "case1_ambiguous_replay",
+      "verdict": "BLOCK",
+      "required_steps": [
+        "verify_authoritative_state"
+      ],
+      "additional_tool_operations": 1,
+      "passed": true,
+      "detail": [
+        "matched",
+        "prohibit:uncorrelated_replay"
+      ]
+    },
+    {
+      "case_id": "case2_readonly_timeout",
+      "verdict": "ALLOW",
+      "required_steps": [],
+      "additional_tool_operations": 0,
+      "passed": true,
+      "detail": [
+        "bypass"
+      ]
+    },
+    {
+      "case_id": "case3_precommit_failure",
+      "verdict": "ALLOW",
+      "required_steps": [],
+      "additional_tool_operations": 0,
+      "passed": true,
+      "detail": [
+        "bypass"
+      ]
+    },
+    {
+      "case_id": "case4_successful_mutation",
+      "verdict": "ALLOW",
+      "required_steps": [],
+      "additional_tool_operations": 0,
+      "passed": true,
+      "detail": [
+        "no_matching_policy"
+      ]
+    },
+    {
+      "case_id": "case5_native_safe_replay",
+      "verdict": "BLOCK",
+      "required_steps": [
+        "preserve_operation_identity"
+      ],
+      "additional_tool_operations": 1,
+      "passed": true,
+      "detail": [
+        "matched",
+        "prohibit:uncorrelated_replay"
+      ]
+    },
+    {
+      "case_id": "case6_verification_fallback",
+      "verdict": "BLOCK",
+      "required_steps": [
+        "verify_authoritative_state"
+      ],
+      "additional_tool_operations": 1,
+      "passed": true,
+      "detail": [
+        "matched",
+        "prohibit:uncorrelated_replay"
+      ]
+    }
+  ],
+  "safety_cases_passed": "3/3",
+  "negative_controls_passed": "2/2",
+  "verdict_correctness": "6/6",
+  "unnecessary_verification_operations": 0,
+  "additional_tool_operations": 3,
+  "regression_failures": 0,
+  "verdict": "PROMOTE",
+  "reject_reasons": [],
+  "engine_sha256": "bc6a5a4d731bde5d226c28235494c103b2f9dff44d5f4a921245889e41e43463",
+  "executed_in": "daytona",
+  "sandbox_id": "fc3ff3cf-c2fe-46be-a38c-bfe3bb70db26",
+  "exit_code": 0
+}
